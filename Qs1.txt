@@ -1,0 +1,119 @@
+QS : 1
+➢ Create a database (Eg : MyCev)
+➢ Create a collection (Eg: db_mca)
+➢ Create a collection (Eg: db_cs)
+➢ Insert 10 data to the collection
+➢ List the first 5 data from the collection (limit)
+➢ List the entire data except first 2 data (skip)
+➢ Sort the data by choosing any field in the collection
+➢ Delete data from the collection
+➢ Drop the collection (db_cs)
+➢ Drop Database
+
+code:-
+
+> use MyCev
+switched to db MyCev
+> db.createCollection("db_mca")
+{ "ok" : 1 }
+> db.createCollection("db_cs")
+{ "ok" : 1 }
+> db.db_mca.insertMany([{_id:1,name:"Ajith",age:20},{_id:2,name:"Amal",age:22},{_id:3,name:"Vimal",age:21},{_id:4,name:"Vidhya",age:20},{_id:5,name:"Amith",age:22},{_id:6,name:"Adith",age:21},{_id:7,name:"Amaal",age:20},{_id:8,name:"Arya",age:22},{_id:9,name:"Fidha",age:21},{_id:1,name:"Aadi",age:20}])
+uncaught exception: BulkWriteError({
+        "writeErrors" : [
+                {
+                        "index" : 9,
+                        "code" : 11000,
+                        "errmsg" : "E11000 duplicate key error collection: MyCev.db_mca index: _id_ dup key: { _id: 1.0 }",
+                        "op" : {
+                                "_id" : 1,
+                                "name" : "Aadi",
+                                "age" : 20
+                        }
+                }
+        ],
+        "writeConcernErrors" : [ ],
+        "nInserted" : 9,
+        "nUpserted" : 0,
+        "nMatched" : 0,
+        "nModified" : 0,
+        "nRemoved" : 0,
+        "upserted" : [ ]
+}) :
+BulkWriteError({
+        "writeErrors" : [
+                {
+                        "index" : 9,
+                        "code" : 11000,
+                        "errmsg" : "E11000 duplicate key error collection: MyCev.db_mca index: _id_ dup key: { _id: 1.0 }",
+                        "op" : {
+                                "_id" : 1,
+                                "name" : "Aadi",
+                                "age" : 20
+                        }
+                }
+        ],
+        "writeConcernErrors" : [ ],
+        "nInserted" : 9,
+        "nUpserted" : 0,
+        "nMatched" : 0,
+        "nModified" : 0,
+        "nRemoved" : 0,
+        "upserted" : [ ]
+})
+> db.db_mca.find()
+{ "_id" : 1, "name" : "Ajith", "age" : 20 }
+{ "_id" : 2, "name" : "Amal", "age" : 22 }
+{ "_id" : 3, "name" : "Vimal", "age" : 21 }
+{ "_id" : 4, "name" : "Vidhya", "age" : 20 }
+{ "_id" : 5, "name" : "Amith", "age" : 22 }
+{ "_id" : 6, "name" : "Adith", "age" : 21 }
+{ "_id" : 7, "name" : "Amaal", "age" : 20 }
+{ "_id" : 8, "name" : "Arya", "age" : 22 }
+{ "_id" : 9, "name" : "Fidha", "age" : 21 }
+> db.db_mca.insertOne({_id:10,name:"Gokul",age:23})
+{ "acknowledged" : true, "insertedId" : 10 }
+> db.db_mca.find()
+{ "_id" : 1, "name" : "Ajith", "age" : 20 }
+{ "_id" : 2, "name" : "Amal", "age" : 22 }
+{ "_id" : 3, "name" : "Vimal", "age" : 21 }
+{ "_id" : 4, "name" : "Vidhya", "age" : 20 }
+{ "_id" : 5, "name" : "Amith", "age" : 22 }
+{ "_id" : 6, "name" : "Adith", "age" : 21 }
+{ "_id" : 7, "name" : "Amaal", "age" : 20 }
+{ "_id" : 8, "name" : "Arya", "age" : 22 }
+{ "_id" : 9, "name" : "Fidha", "age" : 21 }
+{ "_id" : 10, "name" : "Gokul", "age" : 23 }
+> db.db_mca.find().limit(5)
+{ "_id" : 1, "name" : "Ajith", "age" : 20 }
+{ "_id" : 2, "name" : "Amal", "age" : 22 }
+{ "_id" : 3, "name" : "Vimal", "age" : 21 }
+{ "_id" : 4, "name" : "Vidhya", "age" : 20 }
+{ "_id" : 5, "name" : "Amith", "age" : 22 }
+> db.db_mca.find().skip(2)
+{ "_id" : 3, "name" : "Vimal", "age" : 21 }
+{ "_id" : 4, "name" : "Vidhya", "age" : 20 }
+{ "_id" : 5, "name" : "Amith", "age" : 22 }
+{ "_id" : 6, "name" : "Adith", "age" : 21 }
+{ "_id" : 7, "name" : "Amaal", "age" : 20 }
+{ "_id" : 8, "name" : "Arya", "age" : 22 }
+{ "_id" : 9, "name" : "Fidha", "age" : 21 }
+{ "_id" : 10, "name" : "Gokul", "age" : 23 }
+> db.db_mca.find().sort({name:1})
+{ "_id" : 6, "name" : "Adith", "age" : 21 }
+{ "_id" : 1, "name" : "Ajith", "age" : 20 }
+{ "_id" : 7, "name" : "Amaal", "age" : 20 }
+{ "_id" : 2, "name" : "Amal", "age" : 22 }
+{ "_id" : 5, "name" : "Amith", "age" : 22 }
+{ "_id" : 8, "name" : "Arya", "age" : 22 }
+{ "_id" : 9, "name" : "Fidha", "age" : 21 }
+{ "_id" : 10, "name" : "Gokul", "age" : 23 }
+{ "_id" : 4, "name" : "Vidhya", "age" : 20 }
+{ "_id" : 3, "name" : "Vimal", "age" : 21 }
+> db.db_mca.remove({})
+WriteResult({ "nRemoved" : 10 })
+> db.db_mca.drop()
+true
+> db.dropDatabase()
+{ "ok" : 1 }
+>

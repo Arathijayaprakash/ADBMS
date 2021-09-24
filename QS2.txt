@@ -1,0 +1,59 @@
+QS : 2
+➢ Create a database Myclass
+➢ Create a collection named “db_students”
+-> Should contain this fields : { student_name, student_rollno,
+mark[subject, mark] }
+Nb: Mark should be stored as array
+➢ Insert details of 10 students in a class
+➢ List the entire students in the class
+➢ Update mark of any students in the collection “db_students”
+➢ Delete the data of first student in the collection
+
+code:-
+
+> use Myclass
+switched to db Myclass
+> db.createCollection("db_students")
+{ "ok" : 1 }
+> db.db_students.insertMany([{name:"Anu",rollNo:1,mark:[{maths:90}]},{name:"Alvin",rollNo:2,mark:[{maths:92}]},{name:"Anju",rollNo:3,mark:[{maths:88}]},{name:"Avinash",rollNo:4,mark:[{maths:95}]},{name:"Amaal",rollNo:5,mark:[{maths:90}]},{name:"Vaish",rollNo:6,mark:[{maths:93}]},{name:"Ajay",rollNo:7,mark:[{maths:90}]},{name:"Abay",rollNo:8,mark:[{maths:92}]},{name:"Anna",rollNo:9,mark:[{maths:90}]},{name:"Anandu",rollNo:10,mark:[{maths:92}]}])
+{
+        "acknowledged" : true,
+        "insertedIds" : [
+                ObjectId("614ab7779e22e8b43ea350af"),
+                ObjectId("614ab7779e22e8b43ea350b0"),
+                ObjectId("614ab7779e22e8b43ea350b1"),
+                ObjectId("614ab7779e22e8b43ea350b2"),
+                ObjectId("614ab7779e22e8b43ea350b3"),
+                ObjectId("614ab7779e22e8b43ea350b4"),
+                ObjectId("614ab7779e22e8b43ea350b5"),
+                ObjectId("614ab7779e22e8b43ea350b6"),
+                ObjectId("614ab7779e22e8b43ea350b7"),
+                ObjectId("614ab7779e22e8b43ea350b8")
+        ]
+}
+> db.db_students.find()
+{ "_id" : ObjectId("614ab7779e22e8b43ea350af"), "name" : "Anu", "rollNo" : 1, "mark" : [ { "maths" : 90 } ] }
+{ "_id" : ObjectId("614ab7779e22e8b43ea350b0"), "name" : "Alvin", "rollNo" : 2, "mark" : [ { "maths" : 92 } ] }
+{ "_id" : ObjectId("614ab7779e22e8b43ea350b1"), "name" : "Anju", "rollNo" : 3, "mark" : [ { "maths" : 88 } ] }
+{ "_id" : ObjectId("614ab7779e22e8b43ea350b2"), "name" : "Avinash", "rollNo" : 4, "mark" : [ { "maths" : 95 } ] }
+{ "_id" : ObjectId("614ab7779e22e8b43ea350b3"), "name" : "Amaal", "rollNo" : 5, "mark" : [ { "maths" : 90 } ] }
+{ "_id" : ObjectId("614ab7779e22e8b43ea350b4"), "name" : "Vaish", "rollNo" : 6, "mark" : [ { "maths" : 93 } ] }
+{ "_id" : ObjectId("614ab7779e22e8b43ea350b5"), "name" : "Ajay", "rollNo" : 7, "mark" : [ { "maths" : 90 } ] }
+{ "_id" : ObjectId("614ab7779e22e8b43ea350b6"), "name" : "Abay", "rollNo" : 8, "mark" : [ { "maths" : 92 } ] }
+{ "_id" : ObjectId("614ab7779e22e8b43ea350b7"), "name" : "Anna", "rollNo" : 9, "mark" : [ { "maths" : 90 } ] }
+{ "_id" : ObjectId("614ab7779e22e8b43ea350b8"), "name" : "Anandu", "rollNo" : 10, "mark" : [ { "maths" : 92 } ] }
+> db.db_students.update({ "_id" : ObjectId("614ab7779e22e8b43ea350af")},{$set:{mark:[{maths:100}]}})
+WriteResult({ "nMatched" : 1, "nUpserted" : 0, "nModified" : 1 })
+> db.db_students.find()
+{ "_id" : ObjectId("614ab7779e22e8b43ea350af"), "name" : "Anu", "rollNo" : 1, "mark" : [ { "maths" : 100 } ] }
+{ "_id" : ObjectId("614ab7779e22e8b43ea350b0"), "name" : "Alvin", "rollNo" : 2, "mark" : [ { "maths" : 92 } ] }
+{ "_id" : ObjectId("614ab7779e22e8b43ea350b1"), "name" : "Anju", "rollNo" : 3, "mark" : [ { "maths" : 88 } ] }
+{ "_id" : ObjectId("614ab7779e22e8b43ea350b2"), "name" : "Avinash", "rollNo" : 4, "mark" : [ { "maths" : 95 } ] }
+{ "_id" : ObjectId("614ab7779e22e8b43ea350b3"), "name" : "Amaal", "rollNo" : 5, "mark" : [ { "maths" : 90 } ] }
+{ "_id" : ObjectId("614ab7779e22e8b43ea350b4"), "name" : "Vaish", "rollNo" : 6, "mark" : [ { "maths" : 93 } ] }
+{ "_id" : ObjectId("614ab7779e22e8b43ea350b5"), "name" : "Ajay", "rollNo" : 7, "mark" : [ { "maths" : 90 } ] }
+{ "_id" : ObjectId("614ab7779e22e8b43ea350b6"), "name" : "Abay", "rollNo" : 8, "mark" : [ { "maths" : 92 } ] }
+{ "_id" : ObjectId("614ab7779e22e8b43ea350b7"), "name" : "Anna", "rollNo" : 9, "mark" : [ { "maths" : 90 } ] }
+{ "_id" : ObjectId("614ab7779e22e8b43ea350b8"), "name" : "Anandu", "rollNo" : 10, "mark" : [ { "maths" : 92 } ] }
+> db.db_students.remove({rollNo:1})
+WriteResult({ "nRemoved" : 1 })

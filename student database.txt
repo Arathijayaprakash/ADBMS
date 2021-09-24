@@ -1,0 +1,336 @@
+mysql> CREATE DATABASE students;
+Query OK, 1 row affected (0.02 sec)
+
+mysql> SHOW DATABASES;
++--------------------+
+| Database           |
++--------------------+
+| Company            |
+| employeedb         |
+| information_schema |
+| mysql              |
+| performance_schema |
+| students           |
+| sys                |
+| testDB             |
++--------------------+
+8 rows in set (0.00 sec)
+
+mysql> USE students
+Database changed
+mysql> CREATE TABLE student_details (s_id int not null auto_increment, s_name varchar(30) not null, address varchar(30), DOB date, primary key(s_id));
+Query OK, 0 rows affected (0.05 sec)
+
+mysql> DESCRIBE student_details;
++---------+-------------+------+-----+---------+----------------+
+| Field   | Type        | Null | Key | Default | Extra          |
++---------+-------------+------+-----+---------+----------------+
+| s_id    | int         | NO   | PRI | NULL    | auto_increment |
+| s_name  | varchar(30) | NO   |     | NULL    |                |
+| address | varchar(30) | YES  |     | NULL    |                |
+| DOB     | date        | YES  |     | NULL    |                |
++---------+-------------+------+-----+---------+----------------+
+4 rows in set (0.00 sec)
+mysql> INSERT INTO student_details (s_name,address,DOB) VALUES ('Anu','Kochi','2000-08-12'), ('Manu','Kozhikode','2000-01-19'), ('Nidha','Kozhikode','1999-12-10');
+Query OK, 3 rows affected (0.01 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+mysql> SELECT *FROM student_details;
++------+--------+-----------+------------+
+| s_id | s_name | address   | DOB        |
++------+--------+-----------+------------+
+|    1 | Anu    | Kochi     | 2000-08-12 |
+|    2 | Manu   | Kozhikode | 2000-01-19 |
+|    3 | Nidha  | Kozhikode | 1999-12-10 |
++------+--------+-----------+------------+
+3 rows in set (0.00 sec)
+
+mysql> ALTER TABLE student_details ADD COLUMN department varchar(30);
+Query OK, 0 rows affected (0.04 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> SELECT *FROM student_details;
++------+--------+-----------+------------+------------+
+| s_id | s_name | address   | DOB        | department |
++------+--------+-----------+------------+------------+
+|    1 | Anu    | Kochi     | 2000-08-12 | NULL       |
+|    2 | Manu   | Kozhikode | 2000-01-19 | NULL       |
+|    3 | Nidha  | Kozhikode | 1999-12-10 | NULL       |
++------+--------+-----------+------------+------------+
+3 rows in set (0.00 sec)
+
+mysql> UPDATE student_details SET department='mathematics' WHERE s_id=1;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> UPDATE student_details SET department='Physics' WHERE s_id=2;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> UPDATE student_details SET department='computer science' WHERE s_id=2;
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> SELECT *FROM student_details;
++------+--------+-----------+------------+------------------+
+| s_id | s_name | address   | DOB        | department       |
++------+--------+-----------+------------+------------------+
+|    1 | Anu    | Kochi     | 2000-08-12 | mathematics      |
+|    2 | Manu   | Kozhikode | 2000-01-19 | computer science |
+|    3 | Nidha  | Kozhikode | 1999-12-10 | NULL             |
++------+--------+-----------+------------+------------------+
+3 rows in set (0.00 sec)
+
+mysql> UPDATE student_details SET department='physics' WHERE s_id=3;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> SELECT *FROM student_details;
++------+--------+-----------+------------+------------------+
+| s_id | s_name | address   | DOB        | department       |
++------+--------+-----------+------------+------------------+
+|    1 | Anu    | Kochi     | 2000-08-12 | mathematics      |
+|    2 | Manu   | Kozhikode | 2000-01-19 | computer science |
+|    3 | Nidha  | Kozhikode | 1999-12-10 | physics          |
++------+--------+-----------+------------+------------------+
+3 rows in set (0.00 sec)
+
+mysql> CREATE TABLE department
+    -> (d_id int not null,
+    -> d_name varchar(30),
+    -> building varchar(30),
+    -> primary key(d_id));
+Query OK, 0 rows affected (0.05 sec)
+
+mysql> DESCRIBE department;
++----------+-------------+------+-----+---------+-------+
+| Field    | Type        | Null | Key | Default | Extra |
++----------+-------------+------+-----+---------+-------+
+| d_id     | int         | NO   | PRI | NULL    |       |
+| d_name   | varchar(30) | YES  |     | NULL    |       |
+| building | varchar(30) | YES  |     | NULL    |       |
++----------+-------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> INSERT INTO department VALUES (1,'physics','b1'), (2,'mathematics','b1'), (3,'chemistry',
+'b2'), (4,'computer science','b3');
+Query OK, 4 rows affected (0.01 sec)
+Records: 4  Duplicates: 0  Warnings: 0
+
+mysql> SELECT *FROM department;
++------+------------------+----------+
+| d_id | d_name           | building |
++------+------------------+----------+
+|    1 | physics          | b1       |
+|    2 | mathematics      | b1       |
+|    3 | chemistry        | b2       |
+|    4 | computer science | b3       |
++------+------------------+----------+
+4 rows in set (0.00 sec)
+
+mysql> CREATE TABLE faculties (fac_id int not null, name varchar(30), dept varchar(30), primary key(fac_id));
+Query OK, 0 rows affected (0.06 sec)
+
+mysql> DESCRIBE faculties;
++--------+-------------+------+-----+---------+-------+
+| Field  | Type        | Null | Key | Default | Extra |
++--------+-------------+------+-----+---------+-------+
+| fac_id | int         | NO   | PRI | NULL    |       |
+| name   | varchar(30) | YES  |     | NULL    |       |
+| dept   | varchar(30) | YES  |     | NULL    |       |
++--------+-------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> INSERT INTO faculties
+    -> VALUES
+    -> (1,'smitha','physics'),
+    -> (2,'sini','mathematics'),
+    -> (3,'sunil','computer science'),
+    -> (4,'vineesh','chemistry');
+Query OK, 4 rows affected (0.06 sec)
+Records: 4  Duplicates: 0  Warnings: 0
+
+mysql> SELECT *FROM faculties;
++--------+---------+------------------+
+| fac_id | name    | dept             |
++--------+---------+------------------+
+|      1 | smitha  | physics          |
+|      2 | sini    | mathematics      |
+|      3 | sunil   | computer science |
+|      4 | vineesh | chemistry        |
++--------+---------+------------------+
+4 rows in set (0.00 sec)
+
+mysql> ALTER TABLE faculties
+    -> ADD COLUMN salary int;
+Query OK, 0 rows affected (0.10 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> UPDATE faculties SET salary=50000 WHERE fac_id=1;
+Query OK, 1 row affected (0.06 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> UPDATE faculties SET salary=45000 WHERE fac_id=2;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> UPDATE faculties SET salary=45500 WHERE fac_id=2;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> UPDATE faculties SET salary=48000 WHERE fac_id=3;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> UPDATE faculties SET salary=48000 WHERE fac_id=4;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> SELECT *FROM faculties;
++--------+---------+------------------+--------+
+| fac_id | name    | dept             | salary |
++--------+---------+------------------+--------+
+|      1 | smitha  | physics          |  50000 |
+|      2 | sini    | mathematics      |  45500 |
+|      3 | sunil   | computer science |  48000 |
+|      4 | vineesh | chemistry        |  48000 |
++--------+---------+------------------+--------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT name,salary FROM faculties;
++---------+--------+
+| name    | salary |
++---------+--------+
+| smitha  |  50000 |
+| sini    |  45500 |
+| sunil   |  48000 |
+| vineesh |  48000 |
++---------+--------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT AVG(salary)AS 'avg salary' FROM faculties;
++------------+
+| avg salary |
++------------+
+| 47875.0000 |
++------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT name FROM faculties ORDER BY salary;
++---------+
+| name    |
++---------+
+| sini    |
+| sunil   |
+| vineesh |
+| smitha  |
++---------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT name FROM faculties ORDER BY salary DESC;
++---------+
+| name    |
++---------+
+| smitha  |
+| sunil   |
+| vineesh |
+| sini    |
++---------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT name,salary FROM faculties ORDER BY salary DESC;
++---------+--------+
+| name    | salary |
++---------+--------+
+| smitha  |  50000 |
+| sunil   |  48000 |
+| vineesh |  48000 |
+| sini    |  45500 |
++---------+--------+
+4 rows in set (0.01 sec)
+
+mysql> SHOW TABLES;
++--------------------+
+| Tables_in_students |
++--------------------+
+| department         |
+| faculties          |
+| student_details    |
++--------------------+
+3 rows in set (0.00 sec)
+
+mysql> SELECT *FROM department;
++------+------------------+----------+
+| d_id | d_name           | building |
++------+------------------+----------+
+|    1 | physics          | b1       |
+|    2 | mathematics      | b1       |
+|    3 | chemistry        | b2       |
+|    4 | computer science | b3       |
++------+------------------+----------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT *FROM faculties;
++--------+---------+------------------+--------+
+| fac_id | name    | dept             | salary |
++--------+---------+------------------+--------+
+|      1 | smitha  | physics          |  50000 |
+|      2 | sini    | mathematics      |  45500 |
+|      3 | sunil   | computer science |  48000 |
+|      4 | vineesh | chemistry        |  48000 |
++--------+---------+------------------+--------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT *FROM student_details;
++------+--------+-----------+------------+------------------+
+| s_id | s_name | address   | DOB        | department       |
++------+--------+-----------+------------+------------------+
+|    1 | Anu    | Kochi     | 2000-08-12 | mathematics      |
+|    2 | Manu   | Kozhikode | 2000-01-19 | computer science |
+|    3 | Nidha  | Kozhikode | 1999-12-10 | physics          |
++------+--------+-----------+------------+------------------+
+3 rows in set (0.00 sec)
+
+mysql> SELECT department.d_name,faculties.name FROM department INNER JOIN faculties ON department.d_name=faculties.dept;
++------------------+---------+
+| d_name           | name    |
++------------------+---------+
+| physics          | smitha  |
+| mathematics      | sini    |
+| computer science | sunil   |
+| chemistry        | vineesh |
++------------------+---------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT faculties.name,student_details.s_name FROM faculties INNER JOIN student_details ON faculties.dept=student_details.department;
++--------+--------+
+| name   | s_name |
++--------+--------+
+| smitha | Nidha  |
+| sini   | Anu    |
+| sunil  | Manu   |
++--------+--------+
+3 rows in set (0.00 sec)
+
+mysql> SELECT faculties.name,student_details.s_name FROM faculties LEFT JOIN student_details ON faculties.dept=student_details.department;
++---------+--------+
+| name    | s_name |
++---------+--------+
+| smitha  | Nidha  |
+| sini    | Anu    |
+| sunil   | Manu   |
+| vineesh | NULL   |
++---------+--------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT faculties.name,student_details.s_name FROM faculties RIGHT JOIN student_details ON faculties.dept=student_details.department;
++--------+--------+
+| name   | s_name |
++--------+--------+
+| sini   | Anu    |
+| sunil  | Manu   |
+| smitha | Nidha  |
++--------+--------+
+3 rows in set (0.00 sec)
+
+
